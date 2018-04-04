@@ -1,0 +1,68 @@
+<!doctype HTML>
+
+<meta charset = "UTF-8" />
+
+<title>Text to Brainfuck converter</title>
+
+<style>
+	textarea {
+		width: 40rem;
+		height: 30rem;
+	}
+
+	pre {
+		width: 40rem;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+</style>
+
+<h1>Text to Brainfuck converter</h1>
+
+<p><textarea id = "text"></textarea></p>
+
+<p><input id = "convert" type = "button" value = "Convert" /></p>
+
+<h2>Result</h2>
+
+<pre id = "result"></pre>
+
+<script>
+	"use strict";
+
+	let textNode = document.querySelector("#text");
+	let convertNode = document.querySelector("#convert");
+	let resultNode = document.querySelector("#result");
+
+	let encoder = new TextEncoder();
+
+	let convertText = function () {
+		let data = encoder.encode(textNode.value);
+
+		let result = ">--->--->--->"
+
+		for (let i = data.length - 1; i >= 0; --i) {
+			let byte = data[i];
+
+			for (let j = 0; j < 3; ++j) {
+				result += ["---", "--", "-", "", "+", "++", "+++"][byte % 7] + ">";
+				byte = Math.floor(byte / 7);
+			}
+		}
+
+		resultNode.textContent = result + "+[<+++[-<+++++++>]<+++[-<+++++++>]<+++[.>]<]";
+	};
+
+	document.addEventListener("DOMContentLoaded", convertText);
+	convertNode.addEventListener("click", convertText);
+</script>
+
+<h2>Links</h2>
+
+<ul>
+	<li><a href = "https://github.com/Kleshni/Brainfuck-converter/archive/master.zip">Source code</a>.</li>
+	<li><a href = "https://github.com/Kleshni/Brainfuck-converter.git">Git repository</a>.</li>
+	<li><a href = "https://github.com/Kleshni/Brainfuck-converter/issues">Issue tracker</a>.</li>
+	<li>Bitmessage: BM-2cT5WWccBgLsHTw5ADLcodTz4dbqdtrwrQ.</li>
+	<li>Mail: <a href = "mailto:kleshni@protonmail.ch">kleshni@protonmail.ch</a>.</li>
+</ul>
